@@ -1,0 +1,36 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AnimeX" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/bright_light_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/beaded_blue</item>
+        <item name="colorAccent">@color/electric_violet</item>
+        <item name="android:windowBackground">@color/dark_blue</item>
+    </style>
+
+    <style name="Theme.AnimeX" parent="Base.Theme.AnimeX">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/electric_violet</item>
+    </style>
+
+    <style name="Theme.AnimeX.Splash" parent="Base.Theme.AnimeX">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">@color/dark_blue</item>
+    </style>
+
+    <!--Image Shape Style-->
+    <style name="SpecificCornerRounded">
+        <item name="cornerSizeBottomLeft">75dp</item>
+        <item name="cornerSizeBottomRight">75dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+    <style name="SpecificCornerRounded.Small">
+        <item name="cornerSizeBottomLeft">@dimen/_20sdp</item>
+        <item name="cornerSizeBottomRight">@dimen/_20sdp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/animeFragment">
+
+    <fragment
+        android:id="@+id/animeFragment"
+        android:name="com.nedaluof.animex.ui.main.anime.AnimeFragment"
+        android:label="AnimeFragment"
+        tools:layout="@layout/fragment_anime">
+
+        <action
+            android:id="@+id/action_animeFragment_to_animeDetailsFragment"
+            app:destination="@id/anime_details_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/anime_details_fragment"
+        android:name="com.nedaluof.animex.ui.main.anime.animedetails.AnimeDetailsFragment"
+        android:label="AnimeDetailsFragment"
+        tools:layout="@layout/fragment_anime_details">
+        <argument
+            android:name="anime"
+            app:argType="com.nedaluof.animex.domain.model.anime.Anime"
+            app:nullable="true" />
+    </fragment>
+</navigation>

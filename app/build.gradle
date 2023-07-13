@@ -1,0 +1,116 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: "$rootDir/versions.gradle"
+
+android {
+    namespace 'com.nedaluof.animex'
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        applicationId "com.nedaluof.animex"
+        minSdk versions.minSdk
+        targetSdk versions.compileSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        buildConfigField "String", "BASE_URL", "\"https://kitsu.io/api/edge/\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures.dataBinding = true
+}
+
+dependencies {
+    /** app **/
+    //app compat
+    implementation "androidx.appcompat:appcompat:$versions.appCompat"
+    //constraint layout
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+    //recycler view
+    implementation "androidx.recyclerview:recyclerview:$versions.recyclerView"
+    //MDC
+    implementation "com.google.android.material:material:$versions.material"
+    //splash api
+    implementation "androidx.core:core-splashscreen:$versions.splashApi"
+    //swipe refresh layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipeRefreshLayout"
+    //shimmer effect
+    implementation "com.facebook.shimmer:shimmer:$versions.shimmer"
+    //layouts design sizes helper
+    implementation "com.intuit.sdp:sdp-android:$versions.intuit"
+    implementation "com.intuit.ssp:ssp-android:$versions.intuit"
+    //image loader
+    implementation "io.coil-kt:coil:$versions.coil"
+    //fragment extensions
+    implementation "androidx.fragment:fragment-ktx:$versions.fragmentKtx"
+    /**jet-pack Components**/
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.nav"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.nav"
+    //lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
+    //room database
+    implementation "androidx.room:room-runtime:$versions.room"
+    implementation "androidx.room:room-ktx:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room_compiler"
+    //hilt dependencies injection
+    implementation "com.google.dagger:hilt-android:$versions.hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
+    //paging
+    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
+    //DataStore
+    implementation "com.github.nedaluof:MiHawk:$versions.mihawk"
+    /** remote **/
+    implementation("com.squareup.retrofit2:retrofit:$versions.retrofit") { exclude module: 'okhttp' }
+    implementation "com.squareup.retrofit2:converter-moshi:$versions.converter"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.interceptor"
+    implementation "com.squareup.moshi:moshi:$versions.moshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
+    /** kotlin **/
+    kapt "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0"
+    //kotlin extensions
+    implementation "androidx.core:core-ktx:$versions.coreKtx"
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    //kotlin reflect
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.reflect"
+    //debugging
+    implementation "com.jakewharton.timber:timber:$versions.timber"
+    //de-sugaring
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    //Test libs
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    //testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation 'org.mockito:mockito-core:3.9.0'
+    testImplementation 'org.mockito:mockito-inline:3.9.0'
+}
+
+kapt { correctErrorTypes = true }

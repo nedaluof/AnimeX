@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AnimeX</string>
+    <string name="retry_message">An issue occurred please try again</string>
+    <string name="go_back_label">Go back</string>
+</resources>

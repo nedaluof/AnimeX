@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="anime"
+            type="com.nedaluof.animex.domain.model.anime.Anime" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_50sdp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/anime_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    app:loadUrl="@{anime.posterImage}"
+                    app:shapeAppearance="@style/SpecificCornerRounded.Small"
+                    tools:src="@drawable/logo_wolf" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@drawable/back_button_style"
+                    android:drawableStart="@drawable/back_button_icon"
+                    android:drawablePadding="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="@string/go_back_label"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="-30dp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_box"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:text="@{anime.englishName}"
+                    android:textAlignment="center"
+                    android:textColor="@color/bright_light_green"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    tools:text="One Piece" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name_jp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:text="@{anime.japaneseName}"
+                    android:textAlignment="center"
+                    android:textColor="@color/bright_light_green"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    tools:text="One Piece" />
+
+                <com.nedaluof.animex.ui.custom.LinearProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_margin="@dimen/_8sdp"
+                    app:ProgressBackground="@color/bright_light_green"
+                    app:ProgressToBackground="@color/dark_blue"
+                    app:RadiusAll="30"
+                    app:ColorTitle="@color/electric_violet"
+                    app:setStrValue="@{anime.averageRating}"
+                    app:setProgressTitle="@{anime.averageTitle}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@color/bright_light_green" />
+
+                <include
+                    layout="@layout/include_details_layout"
+                    app:firstTitle="@{`Show type`}"
+                    app:firstValue="@{anime.showType}"
+                    app:secondTitle="@{`Status`}"
+                    app:secondValue="@{anime.status}" />
+
+                <include
+                    layout="@layout/include_details_layout"
+                    app:firstTitle="@{`Start Date`}"
+                    app:firstValue="@{anime.startDate}"
+                    app:secondTitle="@{`End Date`}"
+                    app:secondValue="@{anime.endDate}" />
+
+                <include
+                    layout="@layout/include_details_layout"
+                    app:firstTitle="@{`Episodes number`}"
+                    app:firstValue="@{anime.episodesCount}"
+                    app:secondTitle="@{`Episode length`}"
+                    app:secondValue="@{anime.episodesLength}" />
+
+                <include
+                    layout="@layout/include_details_layout"
+                    app:firstTitle="@{`Users number`}"
+                    app:firstValue="@{anime.usersCount}"
+                    app:secondTitle="@{`Favorites number`}"
+                    app:secondValue="@{anime.favoritesCount}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@color/bright_light_green" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:text="About"
+                    android:textColor="@color/bright_light_green"
+                    android:textSize="@dimen/_18ssp"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:text="@{anime.description}"
+                    android:textColor="@color/white"
+                    app:autoSizeMaxTextSize="@dimen/_12ssp"
+                    app:autoSizeMinTextSize="@dimen/_10ssp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform"
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+</layout>

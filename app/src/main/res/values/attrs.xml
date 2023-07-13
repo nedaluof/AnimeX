@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LinearProgressBar">
+        <attr name="RadiusAll" format="integer"/>
+        <attr name="ProgressBackground" format="color"/>
+        <attr name="ProgressToBackground" format="color"/>
+        <attr name="ColorTitle" format="color"/>
+        <attr name="ToProgressInt" format="integer"/>
+        <attr name="ToProgressPercent" format="float"/>
+        <attr name="ToProgressPercentStr" format="string"/>
+        <attr name="TitleProgress" format="string"/>
+        <attr name="TitleSize" format="dimension"/>
+    </declare-styleable>
+</resources>
