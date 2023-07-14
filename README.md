@@ -1,4 +1,4 @@
-## 󠀢AnimeX
+# 󠀢AnimeX
 AnimeX ⛩️🌸 Simple app that demonstrates various Android development best practices
   
 
