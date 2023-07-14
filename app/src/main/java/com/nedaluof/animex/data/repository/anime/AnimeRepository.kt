@@ -1,6 +1,6 @@
 package com.nedaluof.animex.data.repository.anime
 
-import com.nedaluof.animex.data.datasource.remote.apiresponse.AnimeListResponse
+import com.nedaluof.animex.data.model.apiresponse.AnimeListResponse
 import retrofit2.Response
 
 /**

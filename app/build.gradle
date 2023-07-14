@@ -75,6 +75,7 @@ dependencies {
     //room database
     implementation "androidx.room:room-runtime:$versions.room"
     implementation "androidx.room:room-ktx:$versions.room"
+    implementation "androidx.room:room-paging:$versions.room"
     kapt "androidx.room:room-compiler:$versions.room_compiler"
     //hilt dependencies injection
     implementation "com.google.dagger:hilt-android:$versions.hilt"

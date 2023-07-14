@@ -1,6 +1,6 @@
 package com.nedaluof.animex.data.datasource.remote.api
 
-import com.nedaluof.animex.data.datasource.remote.apiresponse.AnimeListResponse
+import com.nedaluof.animex.data.model.apiresponse.AnimeListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -1,7 +1,19 @@
-package com.nedaluof.animex.data.datasource.remote.apiresponse
+package com.nedaluof.animex.data.model.apiresponse
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.ProvidedTypeConverter
+import androidx.room.TypeConverter
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.rawType
+import java.lang.reflect.Type
+import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf
+import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf.TypeTable
+import kotlin.reflect.jvm.internal.impl.types.KotlinType
+import kotlin.reflect.typeOf
 
 /**
  * Created By NedaluOf - 7/7/2023.
@@ -9,11 +21,13 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class AnimeListResponse(
-  val data: List<Data>,
+  val data: List<AnimeData>,
 )
 
+@Entity(tableName = "anime_table")
 @JsonClass(generateAdapter = true)
-data class Data(
+data class AnimeData(
+  @PrimaryKey(autoGenerate = false)
   val id: String,
   val type: String,
   val links: Links?,
@@ -66,51 +80,51 @@ data class Titles(
   val en: String?,
   @Json(name = "en_jp")
   val enJp: String?,
-  @Json(name ="en_us")
+  @Json(name = "en_us")
   val enUs: String?,
-  @Json(name ="ja_jp")
+  @Json(name = "ja_jp")
   val jaJp: String?,
 )
 
 @JsonClass(generateAdapter = true)
 data class RatingFrequencies(
-  @Json(name ="2")
+  @Json(name = "2")
   val n2: String?,
-  @Json(name ="3")
+  @Json(name = "3")
   val n3: String?,
-  @Json(name ="4")
+  @Json(name = "4")
   val n4: String?,
-  @Json(name ="5")
+  @Json(name = "5")
   val n5: String?,
-  @Json(name ="6")
+  @Json(name = "6")
   val n6: String?,
-  @Json(name ="7")
+  @Json(name = "7")
   val n7: String?,
-  @Json(name ="8")
+  @Json(name = "8")
   val n8: String?,
-  @Json(name ="9")
+  @Json(name = "9")
   val n9: String?,
-  @Json(name ="10")
+  @Json(name = "10")
   val n10: String?,
-  @Json(name ="11")
+  @Json(name = "11")
   val n11: String?,
-  @Json(name ="12")
+  @Json(name = "12")
   val n12: String?,
-  @Json(name ="13")
+  @Json(name = "13")
   val n13: String?,
-  @Json(name ="14")
+  @Json(name = "14")
   val n14: String?,
-  @Json(name ="15")
+  @Json(name = "15")
   val n15: String?,
-  @Json(name ="16")
+  @Json(name = "16")
   val n16: String?,
-  @Json(name ="17")
+  @Json(name = "17")
   val n17: String?,
-  @Json(name ="18")
+  @Json(name = "18")
   val n18: String?,
-  @Json(name ="19")
+  @Json(name = "19")
   val n19: String?,
-  @Json(name ="20")
+  @Json(name = "20")
   val n20: String?,
 )
 

@@ -1,7 +1,7 @@
 package com.nedaluof.animex.data.repository.anime
 
 import com.nedaluof.animex.data.datasource.remote.api.AnimeXApiService
-import com.nedaluof.animex.data.datasource.remote.apiresponse.AnimeListResponse
+import com.nedaluof.animex.data.model.apiresponse.AnimeListResponse
 import retrofit2.Response
 import javax.inject.Inject
 

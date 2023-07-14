@@ -1,16 +1,16 @@
 package com.nedaluof.animex.domain.model.anime
 
-import com.nedaluof.animex.data.datasource.remote.apiresponse.AnimeImage
-import com.nedaluof.animex.data.datasource.remote.apiresponse.Data
+import com.nedaluof.animex.data.model.apiresponse.AnimeImage
+import com.nedaluof.animex.data.model.apiresponse.AnimeData
 import com.nedaluof.animex.domain.model.common.ModelMapper
 import javax.inject.Inject
 
 /**
  * Created By NedaluOf - 7/8/2023.
  */
-class AnimeMapper @Inject constructor() : ModelMapper<Data, Anime> {
+class AnimeMapper @Inject constructor() : ModelMapper<AnimeData, Anime> {
 
-  override fun fromModel(inputModel: Data): Anime = with(inputModel) {
+  override fun fromModel(inputModel: AnimeData): Anime = with(inputModel) {
     val anime = Anime()
     anime.id = id
     with(attributes) {

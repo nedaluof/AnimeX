@@ -1,9 +1,7 @@
 package com.nedaluof.animex.domain.usecase.anime
 
 import androidx.paging.PagingData
-import com.nedaluof.animex.data.datasource.remote.apiresponse.Data
 import com.nedaluof.animex.domain.model.anime.Anime
-import com.nedaluof.animex.domain.model.common.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 

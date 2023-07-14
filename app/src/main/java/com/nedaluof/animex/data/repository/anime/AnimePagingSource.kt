@@ -2,7 +2,7 @@ package com.nedaluof.animex.data.repository.anime
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.nedaluof.animex.data.datasource.remote.apiresponse.Data
+import com.nedaluof.animex.data.model.apiresponse.AnimeData
 import com.nedaluof.animex.domain.model.anime.Anime
 import com.nedaluof.animex.domain.model.common.ModelMapper
 import timber.log.Timber
@@ -13,7 +13,7 @@ import javax.inject.Inject
  */
 class AnimePagingSource @Inject constructor(
   private val repository: AnimeRepository,
-  private val mapper: ModelMapper<Data, Anime>
+  private val mapper: ModelMapper<AnimeData, Anime>
 ) : PagingSource<Int, Anime>() {
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Anime> {
