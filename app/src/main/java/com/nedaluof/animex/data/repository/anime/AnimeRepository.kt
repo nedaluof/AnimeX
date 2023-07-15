@@ -1,5 +1,6 @@
 package com.nedaluof.animex.data.repository.anime
 
+import androidx.paging.PagingSource
 import com.nedaluof.animex.data.model.apiresponse.AnimeData
 import com.nedaluof.animex.data.model.apiresponse.AnimeListResponse
 import com.nedaluof.animex.data.model.db.AnimePagingKey
@@ -10,11 +11,18 @@ import retrofit2.Response
  */
 interface AnimeRepository {
   /**
-   * load anime list
+   * load anime list from network
    * @param page / offset of the page
    * @return Response<AnimeListResponse>
    * */
   suspend fun loadAnimeList(page: Int): Response<AnimeListResponse>
+
+  /**
+   * load anime list from cache
+   * @param page / offset of the page
+   * @return Response<AnimeListResponse>
+   * */
+  fun loadCachedAnimeList(): PagingSource<Int, AnimeData>
 
   /**
    * provide database transaction block to client
@@ -38,6 +46,10 @@ interface AnimeRepository {
    * */
   suspend fun getAnimePagingKeyByAnimeId(id: String): AnimePagingKey?
 
+  /**
+   * get last creation time
+   * */
+  suspend fun getCreationTime(): Long?
   /**
    * clear anime table
    * */

@@ -1,5 +1,6 @@
 package com.nedaluof.animex.data.repository.anime
 
+import androidx.paging.PagingSource
 import androidx.room.withTransaction
 import com.nedaluof.animex.data.datasource.local.AnimeXDatabase
 import com.nedaluof.animex.data.datasource.remote.api.AnimeXApiService
@@ -18,8 +19,8 @@ class AnimeRepositoryImpl @Inject constructor(
 ) : AnimeRepository {
 
   //region variables
-  val animeXDao = database.getAnimeXDao()
-  val animeXPagingKeyDao = database.getAnimeXPagingKeysDao()
+  private val animeXDao = database.getAnimeXDao()
+  private val animeXPagingKeyDao = database.getAnimeXPagingKeysDao()
   //endregion
 
   /**
@@ -31,6 +32,10 @@ class AnimeRepositoryImpl @Inject constructor(
     page: Int
   ): Response<AnimeListResponse> =
     apiService.loadAnimeList(PAGE_LIMIT, page)
+
+  override fun loadCachedAnimeList(): PagingSource<Int, AnimeData> =
+    animeXDao.loadAnimeDataList()
+
 
   /**
    * provide database transaction block to client
@@ -49,12 +54,15 @@ class AnimeRepositoryImpl @Inject constructor(
   }
 
   override suspend fun insertAnimePagingKeys(pagingKeys: List<AnimePagingKey>) {
-   animeXPagingKeyDao.insertAnimePagingKeys(pagingKeys)
+    animeXPagingKeyDao.insertAnimePagingKeys(pagingKeys)
   }
 
-  override suspend fun getAnimePagingKeyByAnimeId(id: String): AnimePagingKey? {
-    return animeXPagingKeyDao.getAnimePagingKeyByAnimeId(id)
-  }
+  override suspend fun getAnimePagingKeyByAnimeId(id: String): AnimePagingKey? =
+    animeXPagingKeyDao.getAnimePagingKeyByAnimeId(id)
+
+
+  override suspend fun getCreationTime(): Long? =
+    animeXPagingKeyDao.getCreationTime()
 
   override suspend fun clearAnimeTable() {
     animeXDao.clearAnimeTable()

@@ -40,7 +40,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object LocalDataSourceModule {
-
   @Singleton
   @Provides
   fun provideAnimeXDatabase(
@@ -50,16 +49,6 @@ object LocalDataSourceModule {
     context,
     AnimeXDatabase::class.java,
     AnimeXDatabase.DATABASE_NAME
-  ).addTypeConverter(LinksTypeConverter(moshi))
-    .addTypeConverter(AttributesTypeConverter(moshi))
-    .addTypeConverter(RelationshipsTypeConverter(moshi))
-    .addTypeConverter(RelationshipTypeConverter(moshi))
-    .addTypeConverter(RelationshipDataTypeConverter(moshi))
-    .addTypeConverter(ImageDimensionTypeConverter(moshi))
-    .addTypeConverter(DimensionsTypeConverter(moshi))
-    .addTypeConverter(MetaTypeConverter(moshi))
-    .addTypeConverter(AnimeImageTypeConverter(moshi))
-    .addTypeConverter(RatingFrequenciesTypeConverter(moshi))
-    .addTypeConverter(TitlesTypeConverter(moshi))
-    .build()
+  ).build()
+
 }

@@ -10,15 +10,31 @@ import com.nedaluof.animex.data.model.db.AnimePagingKey
 import com.nedaluof.animex.data.repository.anime.AnimeRepository
 import com.nedaluof.animex.domain.util.getRightException
 import timber.log.Timber
-import javax.inject.Inject
+import java.util.concurrent.TimeUnit
 
 /**
  * Created By NedaluOf - 7/15/2023.
  */
 @OptIn(ExperimentalPagingApi::class)
-class AnimeRemoteMediator @Inject constructor(
+class AnimeRemoteMediator(
   private val repository: AnimeRepository
 ) : RemoteMediator<Int, AnimeData>() {
+
+  /**
+   * check whether cached data is out of date and decide
+   * whether to trigger a remote refresh.
+   * This method runs before any loading is performed, so
+   * you can manipulate the database (for example, to clear old data)
+   * before triggering any local or remote loads.
+   * */
+  override suspend fun initialize(): InitializeAction {
+    val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
+    return if (System.currentTimeMillis() - (repository.getCreationTime() ?: 0) < cacheTimeout) {
+      InitializeAction.SKIP_INITIAL_REFRESH
+    } else {
+      InitializeAction.LAUNCH_INITIAL_REFRESH
+    }
+  }
 
   override suspend fun load(
     loadType: LoadType,
@@ -26,18 +42,20 @@ class AnimeRemoteMediator @Inject constructor(
   ): MediatorResult {
     val pageOffset: Int = when (loadType) {
       LoadType.REFRESH -> {
-        val remoteKeys = getPagingKeyClosestToCurrentPosition(state)
-        remoteKeys?.nextKey?.minus(1) ?: 1
+        val pagingKey = getPagingKeyClosestToCurrentPosition(state)
+        pagingKey?.nextKey?.minus(10) ?: 10
       }
+
       LoadType.PREPEND -> {
-        val remoteKeys = getPagingKeyForFirstItem(state)
-        val prevKey = remoteKeys?.prevKey
-        prevKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+        val pagingKey = getPagingKeyForFirstItem(state)
+        val prevKey = pagingKey?.prevKey
+        prevKey ?: return MediatorResult.Success(endOfPaginationReached = pagingKey != null)
       }
+
       LoadType.APPEND -> {
-        val remoteKeys = getPagingKeyForLastItem(state)
-        val nextKey = remoteKeys?.nextKey
-        nextKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+        val pagingKey = getPagingKeyForLastItem(state)
+        val nextKey = pagingKey?.nextKey
+        nextKey ?: return MediatorResult.Success(endOfPaginationReached = pagingKey != null)
       }
     }
 
@@ -52,13 +70,20 @@ class AnimeRemoteMediator @Inject constructor(
           repository.clearAnimeTable()
         }
 
-        val prevKey = if (pageOffset > 1) pageOffset - 1 else null
+        val prevKey = if (pageOffset > 10) pageOffset - 10 else null
         val nextKey = if (endOfPaginationReached) null else pageOffset + 10
         val pagingKeys = animeDataList.map {
-          AnimePagingKey(animeId = it.id, prevKey = prevKey, currentOffset = pageOffset, nextKey = nextKey)
+          AnimePagingKey(
+            animeId = it.id,
+            prevKey = prevKey,
+            currentOffset = pageOffset,
+            nextKey = nextKey
+          )
         }
         repository.insertAnimePagingKeys(pagingKeys)
-        repository.insertAnimeDataList(animeDataList.onEachIndexed { _, animeData -> animeData.pageOffset = pageOffset })
+        repository.insertAnimeDataList(animeDataList.onEachIndexed { _, animeData ->
+          animeData.pageOffset = pageOffset
+        })
       }
       return MediatorResult.Success(endOfPaginationReached = isLastPage)
     } catch (exception: Exception) {
