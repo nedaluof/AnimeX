@@ -13,10 +13,10 @@ import com.nedaluof.animex.data.model.db.AnimePagingKey
 interface AnimeXPagingKeysDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertAnimePagingKeys(remoteKey: List<AnimePagingKey>)
+  suspend fun insertAnimePagingKeys(pagingKeys: List<AnimePagingKey>)
 
   @Query("Select * From anime_paging_key Where anime_id = :id")
-  suspend fun getAnimePagingKeyByAnimeId(id: Int): AnimePagingKey?
+  suspend fun getAnimePagingKeyByAnimeId(id: String): AnimePagingKey?
 
   @Query("Delete From anime_paging_key")
   suspend fun clearAnimePagingKeyTable()

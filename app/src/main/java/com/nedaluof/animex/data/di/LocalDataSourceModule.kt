@@ -50,8 +50,7 @@ object LocalDataSourceModule {
     context,
     AnimeXDatabase::class.java,
     AnimeXDatabase.DATABASE_NAME
-  )
-    .addTypeConverter(LinksTypeConverter(moshi))
+  ).addTypeConverter(LinksTypeConverter(moshi))
     .addTypeConverter(AttributesTypeConverter(moshi))
     .addTypeConverter(RelationshipsTypeConverter(moshi))
     .addTypeConverter(RelationshipTypeConverter(moshi))
@@ -63,17 +62,4 @@ object LocalDataSourceModule {
     .addTypeConverter(RatingFrequenciesTypeConverter(moshi))
     .addTypeConverter(TitlesTypeConverter(moshi))
     .build()
-
-  @Singleton
-  @Provides
-  fun provideAnimeXDao(
-    animeXDatabase: AnimeXDatabase
-  ): AnimeXDao = animeXDatabase.getAnimeXDao()
-
-  @Singleton
-  @Provides
-  fun provideAnimeXPagingKeysDao(
-    animeXDatabase: AnimeXDatabase
-  ): AnimeXPagingKeysDao = animeXDatabase.getAnimeXPagingKeysDao()
-
 }

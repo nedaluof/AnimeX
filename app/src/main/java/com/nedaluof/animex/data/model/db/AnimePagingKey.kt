@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
 data class AnimePagingKey(
   @PrimaryKey(autoGenerate = false)
   @ColumnInfo(name = "anime_id")
-  val animeId: Int,
+  val animeId: String,
   val prevKey: Int?,
   val currentOffset: Int,
   val nextKey: Int?,

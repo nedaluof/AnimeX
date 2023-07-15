@@ -24,9 +24,10 @@ data class Anime(
   var usersCount: String = "",
   var favoritesCount: String = "",
   var episodesCount: String = "",
-  var episodesLength: String = ""
+  var episodesLength: String = "",
+  var pageOffset: Int = 0
 ) : Parcelable {
-  fun getAverageTitle():String{
+  fun getAverageTitle(): String {
     return "Average Rating $averageRating"
   }
 }

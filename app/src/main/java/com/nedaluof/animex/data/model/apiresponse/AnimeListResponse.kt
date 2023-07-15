@@ -33,6 +33,8 @@ data class AnimeData(
   val links: Links?,
   val attributes: Attributes,
   val relationships: Relationships,
+  @Json(ignore = true)
+  var pageOffset : Int = 0
 )
 
 @JsonClass(generateAdapter = true)
