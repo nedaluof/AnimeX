@@ -2,9 +2,9 @@
 
 AnimeX ⛩️🌸 Simple app that demonstrates various Android development best practices
  <p align="center">
-        <img src="https://github.com/nedaluof/AnimeX/blob/master/art/anime_x_gif.gif" width="300">
-        <img src="https://github.com/nedaluof/AnimeX/blob/master/art/anime_x_screenshoot_1.PNG" width="300">
-        <img src="https://github.com/nedaluof/AnimeX/blob/master/art/anime_x_screenshoot_2.PNG" width="300">
+        <img src="https://github.com/nedaluof/AnimeX/blob/master/art/anime_x_gif.gif" width="200">
+        <img src="https://github.com/nedaluof/AnimeX/blob/master/art/anime_x_screenshoot_1.PNG" width="200">
+        <img src="https://github.com/nedaluof/AnimeX/blob/master/art/anime_x_screenshoot_2.PNG" width="200">
   </p>
 ## ⛩️ Tech stack
 - [Kotlin](https://kotlinlang.org/)
