@@ -36,15 +36,12 @@ class AnimeDetailsFragment :
     with(binding) {
       args.anime?.let { animeModel ->
         anime = animeModel
-        if (animeModel.posterDimension.height != 0L) {
-          animeImage.post {
-            val layoutParams = RelativeLayout.LayoutParams(
-              RelativeLayout.LayoutParams.MATCH_PARENT,
-              (animeModel.posterDimension.height?.toInt()?.dp ?: 550.dp)
-            )
-            animeImage.layoutParams = layoutParams
-            animeImage.requestLayout()
-          }
+        animeImage.post {
+          val layoutParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT, 550.dp
+          )
+          animeImage.layoutParams = layoutParams
+          animeImage.requestLayout()
         }
       }
     }

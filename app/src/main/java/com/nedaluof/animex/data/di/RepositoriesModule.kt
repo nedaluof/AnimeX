@@ -1,4 +1,4 @@
-package com.nedaluof.animex.di
+package com.nedaluof.animex.data.di
 
 import com.nedaluof.animex.data.repository.anime.AnimeRepositoryImpl
 import com.nedaluof.animex.data.repository.anime.AnimeRepository

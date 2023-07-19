@@ -1,100 +1,61 @@
 package com.nedaluof.animex.domain.model.anime
 
-import com.nedaluof.animex.data.datasource.remote.apiresponse.AnimeImage
-import com.nedaluof.animex.data.datasource.remote.apiresponse.Data
+import com.nedaluof.animex.data.model.apiresponse.AnimeData
+import com.nedaluof.animex.data.model.apiresponse.Title
 import com.nedaluof.animex.domain.model.common.ModelMapper
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 /**
  * Created By NedaluOf - 7/8/2023.
  */
-class AnimeMapper @Inject constructor() : ModelMapper<Data, Anime> {
+class AnimeMapper @Inject constructor() : ModelMapper<AnimeData, Anime> {
 
-  override fun fromModel(inputModel: Data): Anime = with(inputModel) {
+  override fun fromModel(inputModel: AnimeData): Anime = with(inputModel) {
     val anime = Anime()
-    anime.id = id
-    with(attributes) {
-      anime.englishName =
-        titles?.en ?: (titles?.enUs ?: (titles?.enJp ?: ""))
-      anime.japaneseName = titles?.jaJp ?: (titles?.enJp ?: "")
-      anime.description = description ?: ""
-      posterImage?.let {
-        val imageData = getAnimeImageData(it)
-        anime.posterImage = imageData.first
-        anime.posterDimension = imageData.second
+    anime.id = animeId
+    anime.englishName = titleEnglish ?: getTitle(titles, "English") ?: ""
+    anime.japaneseName = titleJapanese ?: getTitle(titles, "Japanese")  ?: ""
+    anime.description = synopsis ?: ""
+    if (images.isNotEmpty()) {
+      val imageUrls = images.values.first()
+      anime.posterImage =
+        imageUrls.largeImageURL ?: (imageUrls.imageURL ?: (imageUrls.smallImageURL ?: ""))
+    } else {
+      trailer.images.let { trailerImages ->
+        trailerImages.let { imagesT ->
+          anime.posterImage = imagesT.largeImageURL ?: (imagesT.imageURL ?: (imagesT.smallImageURL
+            ?: (imagesT.maximumImageURL ?: (imagesT.mediumImageURL ?: ""))))
+        }
       }
-      coverImage?.let {
-        val imageData = getAnimeImageData(it)
-        anime.coverImage = imageData.first
-        anime.coverDimension = imageData.second
-      }
-      anime.startDate = startDate ?: ""
-      anime.endDate = endDate ?: ""
-      anime.showType = showType ?: ""
-      anime.status = status ?: ""
-      anime.averageRating = averageRating ?: ""
-      anime.usersCount = userCount.toString()
-      anime.favoritesCount = favoritesCount.toString()
-      anime.episodesCount = episodeCount.toString()
-      anime.episodesLength = episodeLength.toString()
     }
+    anime.startDate = aired?.from?.substringBefore("T") ?: "ـــ"
+    anime.endDate = aired?.to?.substringBefore("T") ?: "ـــ"
+    anime.showType = type ?: ""
+    anime.status = status ?: ""
+    anime.averageRating = "0.0"
+    score?.let {
+      val decimalFormat = DecimalFormat("#.##").apply {
+        roundingMode = RoundingMode.DOWN
+      }
+      val cleanScore = decimalFormat.format((it * 10.0))
+      anime.averageRating = cleanScore.toString()
+    }
+    anime.usersCount = popularity.toString()
+    anime.favoritesCount = favorites.toString()
+    anime.episodesCount = (episodes ?: 0).toString()
+    anime.episodesLength = duration ?: "25 min"
     anime
   }
 
-  private fun getAnimeImageData(
-    imageData: AnimeImage?
-  ): Pair<String, AnimeImageDimension> {
-    var availableImageType = 1
-    var image = ""
-    var height = 0L
-    var width = 0L
-    imageData?.let {
-      if (!it.large.isNullOrEmpty()) {
-        availableImageType = 1
-        image = it.large
-      } else if (!it.medium.isNullOrEmpty()) {
-        availableImageType = 2
-        image = it.medium
-      } else if (!it.original.isNullOrEmpty()) {
-        availableImageType = 3
-        image = it.original
-      } else if (!it.tiny.isNullOrEmpty()) {
-        availableImageType = 4
-        image = it.tiny
-      }
-    }
-
-    imageData?.meta?.dimensions?.let {
-      when (availableImageType) {
-        1 -> {
-          it.large?.let { dimension ->
-            height = dimension.height ?: 0
-            width = dimension.width ?: 0
-          }
-        }
-
-        2 -> {
-          it.medium?.let { dimension ->
-            height = dimension.height ?: 0
-            width = dimension.width ?: 0
-          }
-        }
-
-        3 -> {
-          it.original?.let { dimension ->
-            height = dimension.height ?: 0
-            width = dimension.width ?: 0
-          }
-        }
-
-        else -> {
-          it.tiny?.let { dimension ->
-            height = dimension.height ?: 0
-            width = dimension.width ?: 0
-          }
-        }
-      }
-    }
-    return Pair(image, AnimeImageDimension(height, width))
+  private fun getTitle(
+    titles: List<Title>,
+    pattern: String
+  ) = if (titles.isNotEmpty()) {
+    val title = titles.firstOrNull { it.type == pattern }
+    title?.title ?: titles[0].title
+  } else {
+    ""
   }
 }

@@ -1,4 +1,4 @@
-package com.nedaluof.animex.di
+package com.nedaluof.animex.data.di
 
 import com.nedaluof.animex.BuildConfig
 import com.nedaluof.animex.data.datasource.remote.api.AnimeXApiService
@@ -19,7 +19,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object RemoteModule {
+object RemoteDataSourceModule {
 
   @Singleton
   @Provides

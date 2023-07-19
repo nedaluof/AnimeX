@@ -1,4 +1,4 @@
-package com.nedaluof.animex.di
+package com.nedaluof.animex.domain.di
 
 import com.nedaluof.animex.domain.usecase.anime.AnimeListUseCase
 import com.nedaluof.animex.domain.usecase.anime.AnimeListUseCaseImpl
