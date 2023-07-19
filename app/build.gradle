@@ -21,7 +21,7 @@ android {
         versionName versions.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        buildConfigField "String", "BASE_URL", "\"https://kitsu.io/api/edge/\""
+        buildConfigField "String", "BASE_URL", "\"https://api.jikan.moe/v4/\""
     }
 
     buildTypes {

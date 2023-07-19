@@ -13,7 +13,6 @@ import retrofit2.http.Query
 interface AnimeXApiService {
   @GET("anime")
   suspend fun loadAnimeList(
-    @Query("page[limit]") pagelimit: Int ,
-    @Query("page[offset]") pageoffset: Int ,
+    @Query("page") page: Int ,
   ): Response<AnimeListResponse>
 }

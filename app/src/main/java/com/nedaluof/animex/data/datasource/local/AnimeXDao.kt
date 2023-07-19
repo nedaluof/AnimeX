@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.nedaluof.animex.data.model.apiresponse.AnimeData
+import com.nedaluof.animex.data.model.db.AnimeDataEntity
 
 /**
  * Created By NedaluOf - 7/14/2023.
@@ -14,12 +14,11 @@ import com.nedaluof.animex.data.model.apiresponse.AnimeData
 interface AnimeXDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertAnimeDataList(list: List<AnimeData>)
+  suspend fun insertAnimeList(list: List<AnimeDataEntity>)
 
-  @Query("SELECT * FROM anime_table ORDER BY id")
-  fun loadAnimeDataList(): PagingSource<Int, AnimeData>
+  @Query("SELECT * FROM anime_table ORDER BY time_stamp ASC")
+  fun loadAnimeList(): PagingSource<Int, AnimeDataEntity>
 
   @Query("DELETE FROM anime_table")
   suspend fun clearAnimeTable()
-
 }

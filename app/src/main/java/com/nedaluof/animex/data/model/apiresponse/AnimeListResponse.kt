@@ -1,192 +1,155 @@
 package com.nedaluof.animex.data.model.apiresponse
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.ProvidedTypeConverter
-import androidx.room.TypeConverter
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.rawType
-import java.lang.reflect.Type
-import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf
-import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf.TypeTable
-import kotlin.reflect.jvm.internal.impl.types.KotlinType
-import kotlin.reflect.typeOf
 
 /**
  * Created By NedaluOf - 7/7/2023.
  */
-
 @JsonClass(generateAdapter = true)
 data class AnimeListResponse(
-  val data: List<AnimeData>,
+  val pagination: Pagination,
+  val data: List<AnimeData>
 )
 
-@Entity(tableName = "anime_table")
 @JsonClass(generateAdapter = true)
 data class AnimeData(
-  @PrimaryKey(autoGenerate = false)
-  val id: String,
-  val type: String,
-  val links: Links?,
-  val attributes: Attributes,
-  val relationships: Relationships,
-  @Json(ignore = true)
-  var pageOffset : Int = 0
-)
-
-@JsonClass(generateAdapter = true)
-data class Links(
-  val self: String,
-)
-
-@JsonClass(generateAdapter = true)
-data class Attributes(
-  val createdAt: String?,
-  val updatedAt: String?,
-  val slug: String?,
-  val synopsis: String?,
-  val description: String?,
-  val coverImageTopOffset: Long?,
-  val titles: Titles?,
-  val canonicalTitle: String?,
-  val abbreviatedTitles: List<String?>?,
-  val averageRating: String?,
-  val ratingFrequencies: RatingFrequencies?,
-  val userCount: Long?,
-  val favoritesCount: Long?,
-  val startDate: String?,
-  val endDate: String?,
-  val nextRelease: Any?,
-  val popularityRank: Long?,
-  val ratingRank: Long?,
-  val ageRating: String?,
-  val ageRatingGuide: String?,
-  val subtype: String?,
+  @Json(name = "mal_id")
+  val animeId: Long,
+  val url: String?,
+  val images: Map<String, Image>,
+  val trailer: Trailer,
+  val approved: Boolean?,
+  val titles: List<Title>,
+  val title: String?,
+  @Json(name = "title_english")
+  val titleEnglish: String? = null,
+  @Json(name = "title_japanese")
+  val titleJapanese: String? = null,
+  @Json(name = "title_synonyms")
+  val titleSynonyms: List<String>?,
+  val type: String?,
+  val source: String?,
+  val episodes: Long?,
   val status: String?,
-  val tba: String?,
-  val posterImage: AnimeImage?,
-  val coverImage: AnimeImage?,
-  val episodeCount: Long?,
-  val episodeLength: Long?,
-  val totalLength: Long?,
-  val youtubeVideoId: String?,
-  val showType: String?,
-  val nsfw: Boolean?,
+  val airing: Boolean?,
+  val aired: Aired?,
+  val duration: String?,
+  val rating: String?,
+  val score: Double? = null,
+  @Json(name = "scored_by")
+  val scoredBy: Long? = null,
+  val rank: Long?,
+  val popularity: Long?,
+  val members: Long?,
+  val favorites: Long?,
+  val synopsis: String?,
+  val background: String? = null,
+  val season: String? = null,
+  val year: Int? = null,
+  val broadcast: Broadcast?,
+  val producers: List<Genre?>?,
+  val licensors: List<Genre?>?,
+  val studios: List<Genre?>?,
+  val genres: List<Genre?>?,
+  val themes: List<Genre?>?,
+  @Json(ignore = true)
+  var page : Int = 0
 )
 
 @JsonClass(generateAdapter = true)
-data class Titles(
-  val en: String?,
-  @Json(name = "en_jp")
-  val enJp: String?,
-  @Json(name = "en_us")
-  val enUs: String?,
-  @Json(name = "ja_jp")
-  val jaJp: String?,
+data class Aired(
+  val from: String?,
+  val to: String? = null,
+  val prop: Prop?,
+  val string: String?
 )
 
 @JsonClass(generateAdapter = true)
-data class RatingFrequencies(
-  @Json(name = "2")
-  val n2: String?,
-  @Json(name = "3")
-  val n3: String?,
-  @Json(name = "4")
-  val n4: String?,
-  @Json(name = "5")
-  val n5: String?,
-  @Json(name = "6")
-  val n6: String?,
-  @Json(name = "7")
-  val n7: String?,
-  @Json(name = "8")
-  val n8: String?,
-  @Json(name = "9")
-  val n9: String?,
-  @Json(name = "10")
-  val n10: String?,
-  @Json(name = "11")
-  val n11: String?,
-  @Json(name = "12")
-  val n12: String?,
-  @Json(name = "13")
-  val n13: String?,
-  @Json(name = "14")
-  val n14: String?,
-  @Json(name = "15")
-  val n15: String?,
-  @Json(name = "16")
-  val n16: String?,
-  @Json(name = "17")
-  val n17: String?,
-  @Json(name = "18")
-  val n18: String?,
-  @Json(name = "19")
-  val n19: String?,
-  @Json(name = "20")
-  val n20: String?,
+data class Prop(
+  val from: From?,
+  val to: From?
 )
 
 @JsonClass(generateAdapter = true)
-data class AnimeImage(
-  val tiny: String?,
-  val large: String?,
-  val small: String?,
-  val medium: String?,
-  val original: String?,
-  val meta: Meta?,
+data class From(
+  val day: Long? = null,
+  val month: Long? = null,
+  val year: Long? = null
 )
 
 @JsonClass(generateAdapter = true)
-data class Meta(
-  val dimensions: Dimensions?,
+data class Broadcast(
+  val day: String? = null,
+  val time: String? = null,
+  val timezone: String? = null,
+  val string: String? = null
 )
 
 @JsonClass(generateAdapter = true)
-data class Dimensions(
-  val tiny: ImageDimension?,
-  val large: ImageDimension?,
-  val small: ImageDimension?,
-  val medium: ImageDimension?,
-  val original: ImageDimension?
+data class Genre(
+  @Json(name = "mal_id")
+  val malID: Long?,
+  val type: String?,
+  val name: String?,
+  val url: String?
 )
 
 @JsonClass(generateAdapter = true)
-data class ImageDimension(
-  val width: Long?,
-  val height: Long?,
+data class Image(
+  @Json(name = "image_url")
+  val imageURL: String?,
+  @Json(name = "small_image_url")
+  val smallImageURL: String?,
+  @Json(name = "large_image_url")
+  val largeImageURL: String?
 )
 
 @JsonClass(generateAdapter = true)
-data class Relationships(
-  val genres: Relationship?,
-  val categories: Relationship?,
-  val castings: Relationship?,
-  val installments: Relationship?,
-  val mappings: Relationship?,
-  val reviews: Relationship?,
-  val mediaRelationships: Relationship?,
-  val characters: Relationship?,
-  val staff: Relationship?,
-  val productions: Relationship?,
-  val quotes: Relationship?,
-  val episodes: Relationship?,
-  val streamingLinks: Relationship?,
-  val animeProductions: Relationship?,
-  val animeCharacters: Relationship?,
-  val animeStaff: Relationship?,
+data class Title(
+  val type: String?,
+  val title: String?
 )
 
 @JsonClass(generateAdapter = true)
-data class Relationship(
-  val links: RelationshipData?,
+data class Trailer(
+  @Json(name = "youtube_id")
+  val youtubeID: String? = null,
+  val url: String? = null,
+  @Json(name = "embed_url")
+  val embedURL: String? = null,
+  val images: Images
 )
 
 @JsonClass(generateAdapter = true)
-data class RelationshipData(
-  val self: String?,
-  val related: String?,
+data class Images(
+  @Json(name = "image_url")
+  val imageURL: String? = null,
+  @Json(name = "small_image_url")
+  val smallImageURL: String? = null,
+  @Json(name = "medium_image_url")
+  val mediumImageURL: String? = null,
+  @Json(name = "large_image_url")
+  val largeImageURL: String? = null,
+  @Json(name = "maximum_image_url")
+  val maximumImageURL: String? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class Pagination(
+  @Json(name = "last_visible_page")
+  val lastVisiblePage: Long?,
+  @Json(name = "has_next_page")
+  val hasNextPage: Boolean?,
+  @Json(name = "current_page")
+  val currentPage: Long?,
+  val items: Items?
+)
+
+@JsonClass(generateAdapter = true)
+data class Items(
+  val count: Long?,
+  val total: Long?,
+  @Json(name = "per_page")
+  val perPage: Long?
 )

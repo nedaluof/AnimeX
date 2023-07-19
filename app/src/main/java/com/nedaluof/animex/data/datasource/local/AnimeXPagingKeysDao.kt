@@ -15,12 +15,12 @@ interface AnimeXPagingKeysDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertAnimePagingKeys(pagingKeys: List<AnimePagingKey>)
 
-  @Query("Select * From anime_paging_key Where anime_id = :id")
-  suspend fun getAnimePagingKeyByAnimeId(id: String): AnimePagingKey?
+  @Query("Select * From anime_paging_key Where anime_id = :anime_id")
+  suspend fun getAnimePagingKeyByAnimeId(anime_id: Long): AnimePagingKey?
 
   @Query("Delete From anime_paging_key")
   suspend fun clearAnimePagingKeyTable()
 
   @Query("Select created_at From anime_paging_key Order By created_at DESC LIMIT 1")
-  suspend fun getCreationTime(): Long?
+  suspend fun getLastCreationTime(): Long?
 }

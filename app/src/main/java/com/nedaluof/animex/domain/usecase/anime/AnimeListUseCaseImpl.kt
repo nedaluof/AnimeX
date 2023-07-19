@@ -32,22 +32,15 @@ class AnimeListUseCaseImpl @Inject constructor(
   ): Flow<PagingData<Anime>> {
     return Pager(
       config = PagingConfig(
-        pageSize = PAGE_SIZE,
-        prefetchDistance = PRE_FETCH_SIZE,
-        initialLoadSize = PAGE_SIZE,
+        pageSize = 25,
         enablePlaceholders = false
       ),
       pagingSourceFactory = { repository.loadCachedAnimeList() },
       remoteMediator = AnimeRemoteMediator(repository)
     ).flow.map {
-      it.map { animeData ->
-        mapper.fromModel(animeData)!!
+      it.map { animeEntity ->
+        mapper.fromModel(animeEntity.animeData)!!
       }
     }
-  }
-
-  companion object {
-    private const val PAGE_SIZE = 10
-    private const val PRE_FETCH_SIZE = 20
   }
 }

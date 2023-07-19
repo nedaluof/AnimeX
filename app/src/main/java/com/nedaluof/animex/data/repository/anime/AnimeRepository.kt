@@ -1,8 +1,8 @@
 package com.nedaluof.animex.data.repository.anime
 
 import androidx.paging.PagingSource
-import com.nedaluof.animex.data.model.apiresponse.AnimeData
 import com.nedaluof.animex.data.model.apiresponse.AnimeListResponse
+import com.nedaluof.animex.data.model.db.AnimeDataEntity
 import com.nedaluof.animex.data.model.db.AnimePagingKey
 import retrofit2.Response
 
@@ -12,29 +12,28 @@ import retrofit2.Response
 interface AnimeRepository {
   /**
    * load anime list from network
-   * @param page / offset of the page
+   * @param page
    * @return Response<AnimeListResponse>
    * */
   suspend fun loadAnimeList(page: Int): Response<AnimeListResponse>
 
   /**
-   * load anime list from cache
-   * @param page / offset of the page
-   * @return Response<AnimeListResponse>
+   * load anime data list from cache
+   * @return PagingSource<Int, Anime>
    * */
-  fun loadCachedAnimeList(): PagingSource<Int, AnimeData>
+  fun loadCachedAnimeList(): PagingSource<Int, AnimeDataEntity>
 
   /**
    * provide database transaction block to client
    * */
-  suspend fun databaseTransactionBlock(
-    block: suspend () -> Unit
-  )
+  suspend fun <T> transactionBlock(
+    block: suspend () -> T
+  ): T?
 
   /**
    * insert @param anime [list] into anime table
    * */
-  suspend fun insertAnimeDataList(list: List<AnimeData>)
+  suspend fun insertAnimeDataList(list: List<AnimeDataEntity>)
 
   /**
    * insert @param [pagingKeys] list into paging keys table
@@ -44,16 +43,18 @@ interface AnimeRepository {
   /**
    * get paging keys by its @param [id]
    * */
-  suspend fun getAnimePagingKeyByAnimeId(id: String): AnimePagingKey?
+  suspend fun getAnimePagingKeyByAnimeId(id: Long): AnimePagingKey?
 
   /**
-   * get last creation time
+   * get last paging key creation time
    * */
-  suspend fun getCreationTime(): Long?
+  suspend fun getLastCreationTimeOfPagingKey(): Long?
+
   /**
-   * clear anime table
+   * clear anime data table
    * */
-  suspend fun clearAnimeTable()
+  suspend fun clearAnimeDataTable()
+
   /**
    * clear paging keys table
    * */

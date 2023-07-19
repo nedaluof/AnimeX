@@ -8,14 +8,11 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Anime(
-  var id: String = "",
+  var id: Long = 0L,
   var englishName: String = "",
   var japaneseName: String = "",
   var description: String = "",
   var posterImage: String = "",
-  var posterDimension: AnimeImageDimension = AnimeImageDimension(),
-  var coverImage: String = "",
-  var coverDimension: AnimeImageDimension = AnimeImageDimension(),
   var startDate: String = "",
   var endDate: String = "",
   var showType: String = "",
@@ -31,9 +28,3 @@ data class Anime(
     return "Average Rating $averageRating"
   }
 }
-
-@Parcelize
-data class AnimeImageDimension(
-  var width: Long? = 0,
-  var height: Long? = 0
-) : Parcelable
