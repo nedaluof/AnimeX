@@ -24,14 +24,15 @@ AnimeX ⛩️🌸 Simple app that demonstrates various Android development best 
     <img src="https://github.com/nedaluof/Quotes/blob/master/screen_shots/mad_arch_overview.png?raw=true" width="350">
 </p>
 
-- This Repository contains 2 branches
-  - [First](https://github.com/nedaluof/AnimeX/tree/master) which represents round one of the development phase so
+- This Repository contains 3 branches
+  - [First](https://github.com/nedaluof/AnimeX/tree/master) which represents master that contain ready base code for development.
+  - [Second](https://github.com/nedaluof/AnimeX/tree/round_1/base) which represents round one of the development phase so
       in this round the data bumped directly from the Remote Source to the UI over the [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) PagingSource without any caching , The next image demonstrates the flow of the process.
 
     <p align="center">
     <img src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*jXAQFUGy65Bd4KemB4Fl0Q.jpeg" width="800">
     </p>
-  - [Second](https://github.com/nedaluof/AnimeX/tree/round_2/caching) which represents round two of the development phase so
+  - [Third](https://github.com/nedaluof/AnimeX/tree/round_2/caching) which represents round two of the development phase so
     in this round the data bumped directly from the database to the UI over the [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) PagingSource Assisted with [Remote Mediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator) which control the process of loading new pages from the Remote Source
   and cache it on the database, so based on this flow the database become the source of truth of the data in the app ,the remote mediator calculate the pages based on stored AnimeXPagingKeys that contain:
     - nextKey -> next page number
